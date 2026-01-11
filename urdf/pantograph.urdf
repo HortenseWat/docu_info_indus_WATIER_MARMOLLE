@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot name="pantograph">
+
+  <!-- ===== LINKS ===== -->
+  <link name="base">
+    <visual>
+      <geometry>
+        <mesh filename="package://YOUR_PKG_NAME/meshes/base.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="link1">
+    <visual>
+      <geometry>
+        <mesh filename="package://YOUR_PKG_NAME/meshes/link1.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="link2">
+    <visual>
+      <geometry>
+        <mesh filename="package://YOUR_PKG_NAME/meshes/link2.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="link3">
+    <visual>
+      <geometry>
+        <mesh filename="package://YOUR_PKG_NAME/meshes/link3.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="link4">
+    <visual>
+      <geometry>
+        <mesh filename="package://YOUR_PKG_NAME/meshes/link4.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Outil (crayon) -->
+  <link name="tool">
+    <visual>
+      <geometry>
+        <cylinder radius="0.004" length="0.12"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- ===== JOINTS ===== -->
+  <!-- Moteur gauche -->
+  <joint name="joint_left_motor" type="revolute">
+    <parent link="base"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Coude gauche -->
+  <joint name="joint_left_elbow" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Moteur droit -->
+  <joint name="joint_right_motor" type="revolute">
+    <parent link="base"/>
+    <child link="link4"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Coude droit -->
+  <joint name="joint_right_elbow" type="revolute">
+    <parent link="link4"/>
+    <child link="link3"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Fixer le crayon sur link2 -->
+  <joint name="joint_tool" type="fixed">
+    <parent link="link2"/>
+    <child link="tool"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>
