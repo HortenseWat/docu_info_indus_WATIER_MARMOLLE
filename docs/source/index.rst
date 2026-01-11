@@ -10,9 +10,15 @@ Welcome to Pentographe_WATIER_MARMOLLE's documentation!
    :maxdepth: 2
    :caption: Sommaire
 
-   pages/00_intro 
+   pages/00_intro
+   pages/01_elec
+   pages/02_meca
+   pages/03_repo
+   pages/04_sphinx 
    pages/50_tests
-
+   pages/60_ros2
+   pages/80_urdf
+   pages/90_rviz
 
 Indices and tables
 ==================

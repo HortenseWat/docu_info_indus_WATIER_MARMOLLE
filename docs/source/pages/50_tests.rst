@@ -1,13 +1,13 @@
-Tests et qualité
-================
+Tests
+=====
 
 Objectif
 --------
 
 Montrer comment on évalue la qualité du code : tests unitaires + exécution automatique (CI).
 
-Exécution locale
-----------------
+Test unitaire
+-------------
 
 - Lancer les tests : ``pytest``
 
