@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="fr." data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Installation électronique – Mise en place du setup &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=fabab5a3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Mécanique du Pantographe" href="02_meca.html" />
+    <link rel="prev" title="Introduction" href="00_intro.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="installation-electronique-mise-en-place-du-setup">
+<h1>Installation électronique – Mise en place du setup<a class="headerlink" href="#installation-electronique-mise-en-place-du-setup" title="Link to this heading">¶</a></h1>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>Avant de commencer le projet (développement, documentation, ROS2, tests),
+il est nécessaire de mettre en place un environnement de travail fonctionnel
+autour de la Raspberry Pi.</p>
+<p>Cette étape décrit uniquement le <strong>branchement matériel de base</strong> permettant
+d’utiliser la Raspberry Pi comme un ordinateur classique.</p>
+</section>
+<section id="materiel-necessaire">
+<h2>Matériel nécessaire<a class="headerlink" href="#materiel-necessaire" title="Link to this heading">¶</a></h2>
+<p>Pour démarrer la Raspberry Pi, le matériel suivant est requis :</p>
+<ul class="simple">
+<li><p>Une <strong>Raspberry Pi</strong> (avec carte micro-SD déjà installée)</p></li>
+<li><p>Un <strong>écran</strong></p></li>
+<li><p>Un <strong>clavier USB</strong></p></li>
+<li><p>Une <strong>souris USB</strong></p></li>
+<li><p>Un <strong>câble HDMI</strong></p></li>
+<li><p>Un <strong>câble Ethernet</strong></p></li>
+<li><p>Une <strong>alimentation pour la Raspberry Pi</strong></p></li>
+</ul>
+</section>
+<section id="types-de-cables-utilises">
+<h2>Types de câbles utilisés<a class="headerlink" href="#types-de-cables-utilises" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p><strong>HDMI</strong> :
+- Permet d’afficher l’interface graphique de la Raspberry Pi sur un écran.
+- Selon le modèle de Raspberry Pi, il peut s’agir d’un HDMI standard ou micro-HDMI.</p></li>
+<li><p><strong>Ethernet (RJ45)</strong> :
+- Permet une connexion réseau stable.
+- Indispensable pour :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>installer des paquets</p></li>
+<li><p>cloner le dépôt GitHub</p></li>
+<li><p>pousser les modifications (Git)</p></li>
+<li><p>accéder à la documentation en ligne</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>USB (clavier et souris)</strong> :
+- Le clavier et la souris sont branchés directement sur les ports USB de la Raspberry Pi.
+- Ils permettent une interaction locale sans accès distant.</p></li>
+<li><p><strong>Alimentation</strong> :
+- La Raspberry Pi doit être alimentée avec une alimentation adaptée (USB-C ou micro-USB selon le modèle).
+- Une alimentation insuffisante peut provoquer des comportements instables.</p></li>
+</ul>
+</section>
+<section id="schema-de-branchement-principe">
+<h2>Schéma de branchement (principe)<a class="headerlink" href="#schema-de-branchement-principe" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Connecter l’écran à la Raspberry Pi à l’aide du câble HDMI.</p></li>
+<li><p>Brancher le clavier et la souris sur les ports USB.</p></li>
+<li><p>Connecter le câble Ethernet entre la Raspberry Pi et le réseau.</p></li>
+<li><p>Brancher l’alimentation pour démarrer la Raspberry Pi.</p></li>
+</ol>
+<p>Une fois ces branchements effectués, la Raspberry Pi démarre avec une interface
+graphique et peut être utilisée comme un poste de travail classique
+(terminal, éditeur de texte, navigateur).</p>
+</section>
+<section id="remarque">
+<h2>Remarque<a class="headerlink" href="#remarque" title="Link to this heading">¶</a></h2>
+<p>Ce choix de setup local (écran + clavier + souris) permet de démarrer rapidement
+le projet sans dépendre d’un accès distant (SSH). Une fois l’environnement configuré,
+d’autres modes d’accès (SSH, VNC) peuvent être envisagés, mais ils ne sont pas nécessaires
+pour la mise en place initiale.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Pentographe_WATIER_MARMOLLE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation électronique – Mise en place du setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#materiel-necessaire">Matériel nécessaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#types-de-cables-utilises">Types de câbles utilisés</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schema-de-branchement-principe">Schéma de branchement (principe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#remarque">Remarque</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="60_ros2.html">ros2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="80_urdf.html">URDF (Description mécanique du robot)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="90_rviz.html">RViz (Visualisation du robot)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="00_intro.html" title="Chapitre précédent">Introduction</a></li>
+      <li>Next: <a href="02_meca.html" title="Chapitre suivant">Mécanique du Pantographe</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, HortenseWat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/01_elec.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

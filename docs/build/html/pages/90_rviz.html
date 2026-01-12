@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="fr." data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>RViz (Visualisation du robot) &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=fabab5a3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="prev" title="URDF (Description mécanique du robot)" href="80_urdf.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="rviz-visualisation-du-robot">
+<h1>RViz (Visualisation du robot)<a class="headerlink" href="#rviz-visualisation-du-robot" title="Link to this heading">¶</a></h1>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>L’objectif de RViz est de fournir une <strong>visualisation 3D</strong> de la description du robot
+à partir de l’URDF intégré dans le package ROS2.</p>
+<p>RViz permet notamment de :
+- vérifier la structure des liens et des joints
+- visualiser les frames (TF)
+- valider que l’URDF est correctement chargé par ROS2</p>
+<p>Dans ce projet, RViz est utilisé comme <strong>outil de visualisation et de validation</strong>,
+et non comme un outil de simulation physique complète.</p>
+</section>
+<section id="principe-de-fonctionnement">
+<h2>Principe de fonctionnement<a class="headerlink" href="#principe-de-fonctionnement" title="Link to this heading">¶</a></h2>
+<p>La visualisation repose sur trois éléments principaux :</p>
+<ul class="simple">
+<li><p><strong>URDF</strong> : description du robot</p></li>
+<li><p><strong>robot_state_publisher</strong> : publie les transformations TF à partir de l’URDF</p></li>
+<li><p><strong>RViz</strong> : affiche le robot à partir des informations publiées</p></li>
+</ul>
+<p>Lorsque tout fonctionne correctement :
+- l’URDF est chargé par <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code>
+- les frames sont publiées sur les topics TF
+- RViz affiche le modèle du robot</p>
+</section>
+<section id="mise-en-place">
+<h2>Mise en place<a class="headerlink" href="#mise-en-place" title="Link to this heading">¶</a></h2>
+<p>RViz est lancé via un fichier de lancement (launch) ROS2,
+en même temps que <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code>.</p>
+<p>Commande utilisée :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>pantograph_description<span class="w"> </span>display.launch.py
+</pre></div>
+</div>
+<p>Ce launch permet de :
+- charger l’URDF depuis le package
+- démarrer les nœuds ROS2 nécessaires
+- ouvrir RViz automatiquement</p>
+</section>
+<section id="verifications-effectuees">
+<h2>Vérifications effectuées<a class="headerlink" href="#verifications-effectuees" title="Link to this heading">¶</a></h2>
+<p>Plusieurs vérifications ont été réalisées pour s’assurer que la chaîne ROS2 → RViz fonctionne :</p>
+<ul class="simple">
+<li><p>le nœud <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code> est actif</p></li>
+<li><p>le fichier URDF est bien lu par ROS2</p></li>
+<li><p>des transformations TF statiques sont publiées</p></li>
+</ul>
+<p>La présence de messages sur le topic <code class="docutils literal notranslate"><span class="pre">/tf_static</span></code> confirme que
+l’URDF est correctement chargé et exploité par ROS2.</p>
+</section>
+<section id="limitations-actuelles">
+<h2>Limitations actuelles<a class="headerlink" href="#limitations-actuelles" title="Link to this heading">¶</a></h2>
+<p>L’affichage dans RViz n’est pas encore finalisé.
+Plusieurs limitations ont été identifiées :</p>
+<ul class="simple">
+<li><p>affichage incomplet ou absent du modèle 3D</p></li>
+<li><p>ajustement des visuals et de l’échelle des meshes</p></li>
+<li><p>configuration des joints pour une manipulation interactive</p></li>
+</ul>
+<p>Ces limitations sont <strong>classiques</strong> lors de l’intégration URDF/RViz
+et n’indiquent pas une erreur de conception.</p>
+<p>Elles n’empêchent pas :
+- la validation de la structure du projet
+- l’exploitation de l’URDF par ROS2
+- la compréhension globale de l’architecture</p>
+</section>
+<section id="choix-assume">
+<h2>Choix assumé<a class="headerlink" href="#choix-assume" title="Link to this heading">¶</a></h2>
+<p>Le choix a été fait de :
+- prioriser la structure du projet (Git, Sphinx, tests, ROS2)
+- garantir une base propre et reproductible
+- documenter clairement l’état d’avancement</p>
+<p>La visualisation RViz est considérée comme une <strong>étape d’amélioration</strong>
+plutôt qu’un prérequis bloquant.</p>
+</section>
+<section id="lien-avec-le-projet">
+<h2>Lien avec le projet<a class="headerlink" href="#lien-avec-le-projet" title="Link to this heading">¶</a></h2>
+<p>RViz permet de valider que :
+- le package ROS2 est correctement structuré
+- l’URDF est exploitable
+- la chaîne ROS2 est fonctionnelle</p>
+<p>Cette étape conclut la mise en place de l’environnement ROS2
+et prépare les évolutions futures du projet.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Pentographe_WATIER_MARMOLLE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="60_ros2.html">ros2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="80_urdf.html">URDF (Description mécanique du robot)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RViz (Visualisation du robot)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#principe-de-fonctionnement">Principe de fonctionnement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mise-en-place">Mise en place</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verifications-effectuees">Vérifications effectuées</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#limitations-actuelles">Limitations actuelles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choix-assume">Choix assumé</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lien-avec-le-projet">Lien avec le projet</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="80_urdf.html" title="Chapitre précédent">URDF (Description mécanique du robot)</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, HortenseWat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/90_rviz.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

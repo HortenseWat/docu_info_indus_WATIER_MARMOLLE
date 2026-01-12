@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="fr." data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Créer une documentation (Sphinx) &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=fabab5a3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Tests" href="50_tests.html" />
+    <link rel="prev" title="Repository (Git + GitHub)" href="03_repo.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="creer-une-documentation-sphinx">
+<h1>Créer une documentation (Sphinx)<a class="headerlink" href="#creer-une-documentation-sphinx" title="Link to this heading">¶</a></h1>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>L’objectif est de produire une <strong>documentation technique en ligne</strong>, claire et structurée,
+directement liée au code du projet.</p>
+<p>Cette documentation doit :
+- être versionnée avec Git
+- se mettre à jour automatiquement à chaque modification
+- être consultable via un navigateur (GitHub Pages)</p>
+<p>Pour cela, l’outil <strong>Sphinx</strong> a été utilisé.</p>
+</section>
+<section id="telecharger-et-installer-sphinx">
+<h2>Télécharger et installer Sphinx<a class="headerlink" href="#telecharger-et-installer-sphinx" title="Link to this heading">¶</a></h2>
+<p>Sphinx est un générateur de documentation basé sur Python.
+Il transforme des fichiers texte (reStructuredText) en pages HTML.</p>
+<p>L’installation se fait via <code class="docutils literal notranslate"><span class="pre">pip</span></code> :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sphinx
+</pre></div>
+</div>
+</section>
+<section id="probleme-rencontre-environnement-python">
+<h2>Problème rencontré (environnement Python)<a class="headerlink" href="#probleme-rencontre-environnement-python" title="Link to this heading">¶</a></h2>
+<p>Lors de l’installation, une erreur de type :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">externally-managed-environment</span></code></p></li>
+</ul>
+<p>est apparue.
+Cette erreur est liée à la gestion stricte des paquets Python par le système
+(Debian / Ubuntu récents).</p>
+</section>
+<section id="solution-adoptee">
+<h2>Solution adoptée<a class="headerlink" href="#solution-adoptee" title="Link to this heading">¶</a></h2>
+<p>Au lieu d’installer des paquets Python système, la documentation est générée
+localement sans modifier l’environnement global, ce qui évite de casser Python.</p>
+<p>Sphinx étant déjà disponible sur la machine, la génération a pu être réalisée
+sans forcer l’installation système.</p>
+</section>
+<section id="creer-le-site-de-documentation">
+<h2>Créer le site de documentation<a class="headerlink" href="#creer-le-site-de-documentation" title="Link to this heading">¶</a></h2>
+<p>La documentation est contenue dans le dossier <code class="docutils literal notranslate"><span class="pre">docs/</span></code> du dépôt Git.</p>
+<p>Structure principale :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/source/</span></code> : fichiers source <code class="docutils literal notranslate"><span class="pre">.rst</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/build/</span></code> : fichiers HTML générés (non versionnés)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/Makefile</span></code> : commandes de génération</p></li>
+</ul>
+<p>Le fichier principal est :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/source/index.rst</span></code></p></li>
+</ul>
+</section>
+<section id="generation-locale-de-la-documentation">
+<h2>Génération locale de la documentation<a class="headerlink" href="#generation-locale-de-la-documentation" title="Link to this heading">¶</a></h2>
+<p>Pour générer la documentation en HTML localement :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>-C<span class="w"> </span>docs<span class="w"> </span>html
+</pre></div>
+</div>
+<p>Cette commande :
+- lit les fichiers <code class="docutils literal notranslate"><span class="pre">.rst</span></code> dans <code class="docutils literal notranslate"><span class="pre">docs/source</span></code>
+- génère les pages HTML dans <code class="docutils literal notranslate"><span class="pre">docs/build/html</span></code></p>
+<p>Les pages peuvent ensuite être ouvertes localement dans un navigateur
+sans serveur web.</p>
+</section>
+<section id="erreurs-rencontrees-lors-de-la-generation">
+<h2>Erreurs rencontrées lors de la génération<a class="headerlink" href="#erreurs-rencontrees-lors-de-la-generation" title="Link to this heading">¶</a></h2>
+<p>Plusieurs avertissements Sphinx sont apparus, notamment :</p>
+<ul class="simple">
+<li><p>documents référencés dans le <code class="docutils literal notranslate"><span class="pre">toctree</span></code> mais inexistants</p></li>
+<li><p>fichiers <code class="docutils literal notranslate"><span class="pre">.rst</span></code> sans titre principal</p></li>
+</ul>
+<p>Exemple :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">toctree</span> <span class="pre">contains</span> <span class="pre">reference</span> <span class="pre">to</span> <span class="pre">nonexisting</span> <span class="pre">document</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">document</span> <span class="pre">doesn't</span> <span class="pre">have</span> <span class="pre">a</span> <span class="pre">title</span></code></p></li>
+</ul>
+<p>Ces erreurs ont permis de :
+- détecter des pages manquantes
+- structurer correctement chaque fichier <code class="docutils literal notranslate"><span class="pre">.rst</span></code> avec un titre</p>
+<p>Ces avertissements n’empêchent pas la génération mais améliorent la qualité
+de la documentation.</p>
+</section>
+<section id="deploiement-automatique-avec-github-pages">
+<h2>Déploiement automatique avec GitHub Pages<a class="headerlink" href="#deploiement-automatique-avec-github-pages" title="Link to this heading">¶</a></h2>
+<p>La documentation est déployée automatiquement en ligne à chaque <code class="docutils literal notranslate"><span class="pre">push</span></code>
+grâce à <strong>GitHub Actions</strong> et <strong>GitHub Pages</strong>.</p>
+<p>Principe :
+- un workflow GitHub est déclenché à chaque push sur la branche principale
+- la documentation est générée automatiquement
+- les fichiers HTML sont publiés sur GitHub Pages</p>
+<p>Cela permet :
+- d’avoir une documentation toujours à jour
+- de ne pas générer manuellement les fichiers HTML
+- de lier directement documentation et version du code</p>
+</section>
+<section id="lien-avec-le-projet">
+<h2>Lien avec le projet<a class="headerlink" href="#lien-avec-le-projet" title="Link to this heading">¶</a></h2>
+<p>La documentation centralise :
+- l’explication du projet
+- les choix techniques
+- les tests
+- l’organisation ROS2
+- l’URDF et la visualisation</p>
+<p>Elle constitue le support principal de compréhension du projet,
+aussi bien pour les développeurs que pour l’évaluation.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Pentographe_WATIER_MARMOLLE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Créer une documentation (Sphinx)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#telecharger-et-installer-sphinx">Télécharger et installer Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#probleme-rencontre-environnement-python">Problème rencontré (environnement Python)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solution-adoptee">Solution adoptée</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creer-le-site-de-documentation">Créer le site de documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generation-locale-de-la-documentation">Génération locale de la documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#erreurs-rencontrees-lors-de-la-generation">Erreurs rencontrées lors de la génération</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploiement-automatique-avec-github-pages">Déploiement automatique avec GitHub Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lien-avec-le-projet">Lien avec le projet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="60_ros2.html">ros2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="80_urdf.html">URDF (Description mécanique du robot)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="90_rviz.html">RViz (Visualisation du robot)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="03_repo.html" title="Chapitre précédent">Repository (Git + GitHub)</a></li>
+      <li>Next: <a href="50_tests.html" title="Chapitre suivant">Tests</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, HortenseWat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/04_sphinx.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

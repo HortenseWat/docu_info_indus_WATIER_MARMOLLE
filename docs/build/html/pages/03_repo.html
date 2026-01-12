@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="fr." data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Repository (Git + GitHub) &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=fabab5a3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Créer une documentation (Sphinx)" href="04_sphinx.html" />
+    <link rel="prev" title="Mécanique du Pantographe" href="02_meca.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="repository-git-github">
+<h1>Repository (Git + GitHub)<a class="headerlink" href="#repository-git-github" title="Link to this heading">¶</a></h1>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>L’objectif est d’avoir un dépôt Git propre, versionné et synchronisé avec GitHub.
+Cela permet :</p>
+<ul class="simple">
+<li><p>de garder l’historique des modifications (qui a fait quoi, quand, pourquoi)</p></li>
+<li><p>de travailler à plusieurs sans se marcher dessus</p></li>
+<li><p>de déclencher automatiquement des actions (ex: déploiement de la doc, tests) à chaque <code class="docutils literal notranslate"><span class="pre">push</span></code></p></li>
+</ul>
+</section>
+<section id="configuration-git-identite">
+<h2>Configuration Git (identité)<a class="headerlink" href="#configuration-git-identite" title="Link to this heading">¶</a></h2>
+<p>Avant de faire des commits, on configure l’identité Git (nom + email).
+Cela sert à associer chaque commit à une personne.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;HortenseWat&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;hortense.watier@insa-strasbourg.fr&quot;</span>
+</pre></div>
+</div>
+<p>Remarque : on a d’abord nettoyé une ancienne configuration (mauvais utilisateur) :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>user.name
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>user.email
+</pre></div>
+</div>
+</section>
+<section id="cle-ssh-authentification-github">
+<h2>Clé SSH (authentification GitHub)<a class="headerlink" href="#cle-ssh-authentification-github" title="Link to this heading">¶</a></h2>
+<p>Quand on veut pousser sur GitHub, il faut s’authentifier. GitHub n’autorise plus l’authentification
+par mot de passe en HTTPS pour les opérations Git (push/pull). On a donc utilisé SSH.</p>
+<section id="generation-dune-cle-ssh">
+<h3>1) Génération d’une clé SSH<a class="headerlink" href="#generation-dune-cle-ssh" title="Link to this heading">¶</a></h3>
+<p>On supprime d’anciennes clés (si besoin), puis on génère une clé ED25519 :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>~/.ssh/id_ed25519*
+ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;hortense.watier@insa-strasbourg.fr&quot;</span>
+</pre></div>
+</div>
+<p>À la fin, on obtient :</p>
+<ul class="simple">
+<li><p>la clé privée : <code class="docutils literal notranslate"><span class="pre">~/.ssh/id_ed25519</span></code> (à garder secrète)</p></li>
+<li><p>la clé publique : <code class="docutils literal notranslate"><span class="pre">~/.ssh/id_ed25519.pub</span></code> (à copier sur GitHub)</p></li>
+</ul>
+</section>
+<section id="recuperer-la-cle-publique">
+<h3>2) Récupérer la clé publique<a class="headerlink" href="#recuperer-la-cle-publique" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>~/.ssh/id_ed25519.pub
+</pre></div>
+</div>
+<p>La clé publique est ensuite ajoutée dans GitHub :
+Settings → SSH and GPG keys → New SSH key.</p>
+</section>
+<section id="tester-la-connexion-ssh-a-github">
+<h3>3) Tester la connexion SSH à GitHub<a class="headerlink" href="#tester-la-connexion-ssh-a-github" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+</pre></div>
+</div>
+<p>Lors du premier essai, GitHub demande de confirmer l’empreinte (normal).
+On a validé puis GitHub confirme l’authentification :</p>
+<ul class="simple">
+<li><p><em>&quot;You've successfully authenticated, but GitHub does not provide shell access.&quot;</em></p></li>
+</ul>
+</section>
+</section>
+<section id="clonage-du-depot">
+<h2>Clonage du dépôt<a class="headerlink" href="#clonage-du-depot" title="Link to this heading">¶</a></h2>
+<p>Une fois le dépôt GitHub créé, on le clone sur la Raspberry Pi :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/HortenseWat/docu_info_indus_WATIER_MARMOLLE.git
+<span class="nb">cd</span><span class="w"> </span>docu_info_indus_WATIER_MARMOLLE
+</pre></div>
+</div>
+</section>
+<section id="rappel-workflow-git-minimal">
+<h2>Rappel : workflow Git minimal<a class="headerlink" href="#rappel-workflow-git-minimal" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1) voir ce qui a changé</span>
+git<span class="w"> </span>status
+
+<span class="c1"># 2) ajouter les fichiers modifiés</span>
+git<span class="w"> </span>add<span class="w"> </span>.
+
+<span class="c1"># 3) créer le commit</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;message clair&quot;</span>
+
+<span class="c1"># 4) envoyer sur GitHub</span>
+git<span class="w"> </span>push
+</pre></div>
+</div>
+</section>
+<section id="premiers-commits">
+<h2>Premiers commits<a class="headerlink" href="#premiers-commits" title="Link to this heading">¶</a></h2>
+<section id="modifier-un-fichier-ex-readme">
+<h3>1) Modifier un fichier (ex: README)<a class="headerlink" href="#modifier-un-fichier-ex-readme" title="Link to this heading">¶</a></h3>
+<p>On a modifié <code class="docutils literal notranslate"><span class="pre">README.md</span></code> avec un éditeur (ici <code class="docutils literal notranslate"><span class="pre">nano</span></code>) :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>README.md
+</pre></div>
+</div>
+</section>
+<section id="ajouter-les-modifications-staging">
+<h3>2) Ajouter les modifications (staging)<a class="headerlink" href="#ajouter-les-modifications-staging" title="Link to this heading">¶</a></h3>
+<p>On doit ajouter les fichiers modifiés à l’index avec <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code>.</p>
+<p>Erreur rencontrée :
+- On a essayé <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">all</span></code> → Git a compris &quot;all&quot; comme un nom de fichier, donc erreur.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>all
+<span class="c1"># fatal: pathspec &#39;all&#39; did not match any files</span>
+</pre></div>
+</div>
+<p>Solution :
+- Utiliser <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code> pour ajouter toutes les modifications du dossier courant.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="commit">
+<h3>3) Commit<a class="headerlink" href="#commit" title="Link to this heading">¶</a></h3>
+<p>Le commit enregistre un état du projet + un message explicite.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Premier commit : test et modif readme&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="push-vers-github-et-probleme-https">
+<h2>Push vers GitHub (et problème HTTPS)<a class="headerlink" href="#push-vers-github-et-probleme-https" title="Link to this heading">¶</a></h2>
+<p>On a ensuite voulu pousser sur GitHub en HTTPS :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
+</pre></div>
+</div>
+<p>Erreur rencontrée :
+- GitHub refuse le mot de passe : <em>&quot;Password authentication is not supported for Git operations.&quot;</em>
+C’est normal : GitHub impose SSH ou token.</p>
+<section id="solution-passer-le-remote-en-ssh">
+<h3>Solution : passer le remote en SSH<a class="headerlink" href="#solution-passer-le-remote-en-ssh" title="Link to this heading">¶</a></h3>
+<p>On a remplacé l’URL du remote <code class="docutils literal notranslate"><span class="pre">origin</span></code> par l’URL SSH :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>git@github.com:HortenseWat/docu_info_indus_WATIER_MARMOLLE.git
+git<span class="w"> </span>remote<span class="w"> </span>-v
+</pre></div>
+</div>
+<p>Puis le push fonctionne :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
+</pre></div>
+</div>
+</section>
+</section>
+<section id="bonnes-pratiques-utilisees">
+<h2>Bonnes pratiques utilisées<a class="headerlink" href="#bonnes-pratiques-utilisees" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Commits réguliers et messages clairs (ex: <em>&quot;docs: ...&quot;</em>, <em>&quot;test: ...&quot;</em>)</p></li>
+<li><p>Remote en SSH (évite la gestion de tokens)</p></li>
+<li><p>Répertoire propre : pas de fichiers générés (build, caches, etc.) versionnés</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Pentographe_WATIER_MARMOLLE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Repository (Git + GitHub)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-git-identite">Configuration Git (identité)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cle-ssh-authentification-github">Clé SSH (authentification GitHub)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clonage-du-depot">Clonage du dépôt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rappel-workflow-git-minimal">Rappel : workflow Git minimal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#premiers-commits">Premiers commits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#push-vers-github-et-probleme-https">Push vers GitHub (et problème HTTPS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bonnes-pratiques-utilisees">Bonnes pratiques utilisées</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="60_ros2.html">ros2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="80_urdf.html">URDF (Description mécanique du robot)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="90_rviz.html">RViz (Visualisation du robot)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="02_meca.html" title="Chapitre précédent">Mécanique du Pantographe</a></li>
+      <li>Next: <a href="04_sphinx.html" title="Chapitre suivant">Créer une documentation (Sphinx)</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, HortenseWat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/03_repo.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

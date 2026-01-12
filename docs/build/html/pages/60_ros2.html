@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="fr." data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ros2 &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=fabab5a3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="URDF (Description mécanique du robot)" href="80_urdf.html" />
+    <link rel="prev" title="Tests" href="50_tests.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ros2">
+<h1>ros2<a class="headerlink" href="#ros2" title="Link to this heading">¶</a></h1>
+<section id="installation-de-ros2-logiciel">
+<h2>Installation de ros2 (logiciel)<a class="headerlink" href="#installation-de-ros2-logiciel" title="Link to this heading">¶</a></h2>
+<p>install
+lien ros2 jazzy</p>
+</section>
+<section id="workspace-ros2-environnement-de-travail-pour-ros2">
+<h2>Workspace ros2 (environnement de travail pour ros2)<a class="headerlink" href="#workspace-ros2-environnement-de-travail-pour-ros2" title="Link to this heading">¶</a></h2>
+<p>Package Pantographe_description (package de ros2)
+-------------------------------------------------ROS 2
+=====</p>
+</section>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>L’objectif de cette partie est de mettre en place un environnement ROS 2 propre et reproductible
+pour pouvoir :</p>
+<ul class="simple">
+<li><p>organiser les packages du projet</p></li>
+<li><p>intégrer l’URDF dans un package de description</p></li>
+<li><p>préparer la visualisation RViz</p></li>
+</ul>
+<p>Dans ce TP, ROS 2 est utilisé surtout pour la structure du projet et la future visualisation,
+pas uniquement pour exécuter un robot complet.</p>
+</section>
+<section id="verification-de-linstallation-ros-2">
+<h2>Vérification de l’installation ROS 2<a class="headerlink" href="#verification-de-linstallation-ros-2" title="Link to this heading">¶</a></h2>
+<p>La première étape consiste à vérifier si la commande <code class="docutils literal notranslate"><span class="pre">ros2</span></code> est disponible.</p>
+<section id="probleme-rencontre">
+<h3>Problème rencontré<a class="headerlink" href="#probleme-rencontre" title="Link to this heading">¶</a></h3>
+<p>En essayant d’utiliser ROS2, la commande :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2
+</pre></div>
+</div>
+<p>renvoyait :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code></p></li>
+</ul>
+<p>Cela signifie que ROS2 n’est pas chargé dans le terminal (ou que la distribution visée n’est pas installée).</p>
+</section>
+<section id="recherche-de-la-distribution-reellement-installee">
+<h3>Recherche de la distribution réellement installée<a class="headerlink" href="#recherche-de-la-distribution-reellement-installee" title="Link to this heading">¶</a></h3>
+<p>On a constaté que le dossier <code class="docutils literal notranslate"><span class="pre">/opt/ros/humble</span></code> existait, mais qu’il ne contenait pas les exécutables attendus
+(absence du binaire <code class="docutils literal notranslate"><span class="pre">ros2</span></code>).</p>
+<p>Pour confirmer où se trouvait le binaire, on a recherché <code class="docutils literal notranslate"><span class="pre">ros2</span></code> sur la machine :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>ros2<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ros2 introuvable dans PATH&quot;</span>
+sudo<span class="w"> </span>find<span class="w"> </span>/<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span>ros2<span class="w"> </span>-perm<span class="w"> </span>-111<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+<p>Résultat : le binaire était présent ici :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/opt/ros/jazzy/bin/ros2</span></code></p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h3>
+<p>ROS2 fonctionnel sur la machine = <strong>ROS 2 Jazzy</strong>.
+Le dossier <code class="docutils literal notranslate"><span class="pre">/opt/ros/humble</span></code> était présent mais incomplet.</p>
+</section>
+</section>
+<section id="activation-de-ros-2-dans-un-terminal-source">
+<h2>Activation de ROS 2 dans un terminal (source)<a class="headerlink" href="#activation-de-ros-2-dans-un-terminal-source" title="Link to this heading">¶</a></h2>
+<p>Pour utiliser ROS2 dans un terminal, il faut charger l’environnement ROS2 via <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
+</pre></div>
+</div>
+<section id="pourquoi-on-fait-ca">
+<h3>Pourquoi on fait ça<a class="headerlink" href="#pourquoi-on-fait-ca" title="Link to this heading">¶</a></h3>
+<p>Cette commande configure l’environnement du terminal, notamment :
+- ajout des exécutables ROS2 dans le <code class="docutils literal notranslate"><span class="pre">PATH</span></code> (ros2, rviz2, etc.)
+- configuration des chemins de packages et bibliothèques ROS2</p>
+<p>Important : chaque nouveau terminal est indépendant.
+Il faut donc faire le <code class="docutils literal notranslate"><span class="pre">source</span></code> à chaque fois (ou automatiser via <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>).</p>
+</section>
+</section>
+<section id="workspace-ros-2-propre-ros2-ws">
+<h2>Workspace ROS 2 propre : <code class="docutils literal notranslate"><span class="pre">ros2_ws</span></code><a class="headerlink" href="#workspace-ros-2-propre-ros2-ws" title="Link to this heading">¶</a></h2>
+<section id="objectif-du-workspace">
+<h3>Objectif du workspace<a class="headerlink" href="#objectif-du-workspace" title="Link to this heading">¶</a></h3>
+<p>Un workspace ROS2 est créé pour stocker les packages du projet de manière standard.
+Le workspace permet de :</p>
+<ul class="simple">
+<li><p>compiler avec <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code></p></li>
+<li><p>isoler le projet (sans modifier le ROS2 système)</p></li>
+<li><p>versionner uniquement le code utile</p></li>
+</ul>
+</section>
+<section id="creation-du-workspace">
+<h3>Création du workspace<a class="headerlink" href="#creation-du-workspace" title="Link to this heading">¶</a></h3>
+<p>Dans le dépôt Git, on a créé un workspace ROS2 :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>ros2_ws/src
+</pre></div>
+</div>
+<p>La convention ROS2 est :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ros2_ws/src</span></code> : code source des packages</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ros2_ws/build</span></code> : fichiers de build (générés)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ros2_ws/install</span></code> : workspace compilé (généré)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ros2_ws/log</span></code> : logs (générés)</p></li>
+</ul>
+</section>
+<section id="compilation-du-workspace">
+<h3>Compilation du workspace<a class="headerlink" href="#compilation-du-workspace" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws
+colcon<span class="w"> </span>build
+</pre></div>
+</div>
+</section>
+<section id="activation-du-workspace">
+<h3>Activation du workspace<a class="headerlink" href="#activation-du-workspace" title="Link to this heading">¶</a></h3>
+<p>Après compilation, il faut sourcer le workspace pour rendre les packages visibles :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
+<span class="nb">source</span><span class="w"> </span>~/docu_info_indus_WATIER_MARMOLLE/ros2_ws/install/setup.bash
+</pre></div>
+</div>
+<p>Vérification :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>pantograph
+</pre></div>
+</div>
+</section>
+</section>
+<section id="package-pantograph-description">
+<h2>Package <code class="docutils literal notranslate"><span class="pre">pantograph_description</span></code><a class="headerlink" href="#package-pantograph-description" title="Link to this heading">¶</a></h2>
+<section id="objectif-du-package">
+<h3>Objectif du package<a class="headerlink" href="#objectif-du-package" title="Link to this heading">¶</a></h3>
+<p>Un package ROS2 de description est créé pour contenir :</p>
+<ul class="simple">
+<li><p>URDF</p></li>
+<li><p>meshes (Collada <code class="docutils literal notranslate"><span class="pre">.dae</span></code>)</p></li>
+<li><p>fichiers de lancement (launch)</p></li>
+</ul>
+</section>
+<section id="creation">
+<h3>Création<a class="headerlink" href="#creation" title="Link to this heading">¶</a></h3>
+<p>Depuis <code class="docutils literal notranslate"><span class="pre">ros2_ws/src</span></code> :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
+<span class="nb">cd</span><span class="w"> </span>ros2_ws/src
+ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>pantograph_description<span class="w"> </span>--build-type<span class="w"> </span>ament_python
+</pre></div>
+</div>
+</section>
+<section id="pourquoi-ament-python">
+<h3>Pourquoi <code class="docutils literal notranslate"><span class="pre">ament_python</span></code><a class="headerlink" href="#pourquoi-ament-python" title="Link to this heading">¶</a></h3>
+<p>Le package est principalement un package de fichiers (URDF, meshes, launch),
+donc le build type Python est suffisant et simple.
+Il permet aussi d’installer facilement des fichiers dans le répertoire <code class="docutils literal notranslate"><span class="pre">share/</span></code> du package.</p>
+</section>
+</section>
+<section id="erreurs-rencontrees-et-solutions">
+<h2>Erreurs rencontrées et solutions<a class="headerlink" href="#erreurs-rencontrees-et-solutions" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p><strong>Erreur</strong> : <code class="docutils literal notranslate"><span class="pre">ros2:</span> <span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code>
+- <strong>Cause</strong> : environnement non sourcé / mauvaise distribution (humble incomplet)
+- <strong>Solution</strong> : utiliser <code class="docutils literal notranslate"><span class="pre">/opt/ros/jazzy</span></code> et sourcer correctement :</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Erreur</strong> : confusion sur l’endroit où &quot;mettre ROS2&quot;
+- <strong>Clarification</strong> : ROS2 système est dans <code class="docutils literal notranslate"><span class="pre">/opt/ros/...</span></code> (on ne le copie jamais)
+- Le projet contient uniquement un workspace <code class="docutils literal notranslate"><span class="pre">ros2_ws</span></code> versionné (packages + code)</p></li>
+</ul>
+</section>
+<section id="lien-avec-le-projet">
+<h2>Lien avec le projet<a class="headerlink" href="#lien-avec-le-projet" title="Link to this heading">¶</a></h2>
+<p>Cette mise en place ROS2 sert directement à :
+- structurer proprement le projet dans un workspace standard
+- intégrer la description mécanique (URDF + meshes) dans un package dédié
+- préparer la visualisation du pantographe dans RViz</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Pentographe_WATIER_MARMOLLE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ros2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation-de-ros2-logiciel">Installation de ros2 (logiciel)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workspace-ros2-environnement-de-travail-pour-ros2">Workspace ros2 (environnement de travail pour ros2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verification-de-linstallation-ros-2">Vérification de l’installation ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#activation-de-ros-2-dans-un-terminal-source">Activation de ROS 2 dans un terminal (source)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workspace-ros-2-propre-ros2-ws">Workspace ROS 2 propre : <code class="docutils literal notranslate"><span class="pre">ros2_ws</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-pantograph-description">Package <code class="docutils literal notranslate"><span class="pre">pantograph_description</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#erreurs-rencontrees-et-solutions">Erreurs rencontrées et solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lien-avec-le-projet">Lien avec le projet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="80_urdf.html">URDF (Description mécanique du robot)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="90_rviz.html">RViz (Visualisation du robot)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="50_tests.html" title="Chapitre précédent">Tests</a></li>
+      <li>Next: <a href="80_urdf.html" title="Chapitre suivant">URDF (Description mécanique du robot)</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, HortenseWat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/60_ros2.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

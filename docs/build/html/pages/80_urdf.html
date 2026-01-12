@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="fr." data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>URDF (Description mécanique du robot) &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=fabab5a3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="RViz (Visualisation du robot)" href="90_rviz.html" />
+    <link rel="prev" title="ros2" href="60_ros2.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="urdf-description-mecanique-du-robot">
+<h1>URDF (Description mécanique du robot)<a class="headerlink" href="#urdf-description-mecanique-du-robot" title="Link to this heading">¶</a></h1>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>L’objectif de cette partie est de décrire la structure mécanique du pantographe
+à l’aide d’un fichier <strong>URDF</strong> (Unified Robot Description Format).</p>
+<p>L’URDF permet de :
+- décrire les liens mécaniques (bras, base, etc.)
+- définir les articulations (joints)
+- fournir une base exploitable par ROS 2 et RViz</p>
+<p>Dans ce projet, l’URDF est utilisé principalement pour :
+- structurer la description mécanique
+- préparer la visualisation
+- garantir la cohérence entre mécanique et logiciel</p>
+</section>
+<section id="choix-dune-representation-urdf">
+<h2>Choix d’une représentation URDF<a class="headerlink" href="#choix-dune-representation-urdf" title="Link to this heading">¶</a></h2>
+<p>Le pantographe est un <strong>mécanisme à boucle fermée</strong>.
+Or, l’URDF impose une <strong>structure en arbre</strong> (pas de boucle cinématique directe).</p>
+<section id="choix-realise">
+<h3>Choix réalisé<a class="headerlink" href="#choix-realise" title="Link to this heading">¶</a></h3>
+<p>Pour rester compatible avec ROS 2 et RViz, une <strong>représentation arborescente équivalente</strong>
+a été utilisée :</p>
+<ul class="simple">
+<li><p>la boucle mécanique réelle n’est pas entièrement modélisée</p></li>
+<li><p>l’URDF représente une version simplifiée destinée à la visualisation</p></li>
+<li><p>la cinématique exacte est laissée à la logique de calcul (hors URDF)</p></li>
+</ul>
+<p>Ce choix est volontaire et classique dans les projets ROS.</p>
+</section>
+</section>
+<section id="structure-du-package-de-description">
+<h2>Structure du package de description<a class="headerlink" href="#structure-du-package-de-description" title="Link to this heading">¶</a></h2>
+<p>L’URDF est intégré dans le package ROS2 <code class="docutils literal notranslate"><span class="pre">pantograph_description</span></code>.</p>
+<p>Structure retenue :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pantograph_description/urdf/</span></code> : fichiers URDF</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pantograph_description/meshes/</span></code> : fichiers Collada (<code class="docutils literal notranslate"><span class="pre">.dae</span></code>)</p></li>
+</ul>
+<p>Cette organisation respecte les conventions ROS2 et facilite l’installation du package.</p>
+</section>
+<section id="fichier-urdf">
+<h2>Fichier URDF<a class="headerlink" href="#fichier-urdf" title="Link to this heading">¶</a></h2>
+<p>Un fichier URDF a été créé pour décrire les principaux éléments du pantographe.</p>
+<p>Contenu du fichier :
+- un lien de base
+- plusieurs liens représentant les bras du pantographe
+- des joints de type <code class="docutils literal notranslate"><span class="pre">revolute</span></code> pour les articulations
+- des références vers des meshes externes (format <code class="docutils literal notranslate"><span class="pre">.dae</span></code>)</p>
+<p>Exemple de structure de lien avec mesh :</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;link1&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;visual&gt;</span>
+<span class="w">    </span><span class="nt">&lt;geometry&gt;</span>
+<span class="w">      </span><span class="nt">&lt;mesh</span><span class="w"> </span><span class="na">filename=</span><span class="s">&quot;package://pantograph_description/meshes/link1.dae&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/geometry&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/visual&gt;</span>
+<span class="nt">&lt;/link&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="utilisation-des-meshes">
+<h2>Utilisation des meshes<a class="headerlink" href="#utilisation-des-meshes" title="Link to this heading">¶</a></h2>
+<p>Les éléments mécaniques ont été exportés depuis le modèle CAO
+au format <strong>Collada (``.dae``)</strong>.</p>
+<section id="pourquoi-ce-format">
+<h3>Pourquoi ce format<a class="headerlink" href="#pourquoi-ce-format" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>format bien supporté par RViz</p></li>
+<li><p>permet de conserver la géométrie réelle</p></li>
+<li><p>compatible avec URDF</p></li>
+</ul>
+<p>Les meshes sont stockés dans le dossier <code class="docutils literal notranslate"><span class="pre">meshes/</span></code> du package
+et référencés dans l’URDF via le préfixe <code class="docutils literal notranslate"><span class="pre">package://</span></code>.</p>
+</section>
+</section>
+<section id="problemes-rencontres">
+<h2>Problèmes rencontrés<a class="headerlink" href="#problemes-rencontres" title="Link to this heading">¶</a></h2>
+<p>Plusieurs difficultés classiques ont été rencontrées lors de l’intégration URDF :</p>
+<ul class="simple">
+<li><p>affichage incomplet ou absent dans RViz</p></li>
+<li><p>difficulté à identifier si l’URDF était bien chargé</p></li>
+<li><p>différences entre structure mécanique réelle et structure URDF autorisée</p></li>
+</ul>
+<p>Ces problèmes n’empêchent pas la création de l’URDF,
+mais nécessitent des ajustements progressifs.</p>
+</section>
+<section id="verification-de-lurdf">
+<h2>Vérification de l’URDF<a class="headerlink" href="#verification-de-lurdf" title="Link to this heading">¶</a></h2>
+<p>Même sans affichage parfait, plusieurs vérifications ont été effectuées :</p>
+<ul class="simple">
+<li><p>le fichier URDF est bien présent dans le package</p></li>
+<li><p>il est correctement chargé par <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></p></li>
+<li><p>des frames sont publiées (TF statique observable)</p></li>
+</ul>
+<p>Cela confirme que :
+- la structure URDF est valide
+- ROS2 peut exploiter le fichier sans erreur bloquante</p>
+</section>
+<section id="lien-avec-la-suite-du-projet">
+<h2>Lien avec la suite du projet<a class="headerlink" href="#lien-avec-la-suite-du-projet" title="Link to this heading">¶</a></h2>
+<p>L’URDF constitue une base pour :
+- la visualisation dans RViz
+- la compréhension de la structure mécanique
+- l’intégration future avec des nœuds ROS2</p>
+<p>L’amélioration de la visualisation (axes, échelle, détails des joints)
+est identifiée comme une <strong>piste d’amélioration</strong>, mais n’est pas bloquante
+pour la validation du projet.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Pentographe_WATIER_MARMOLLE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="60_ros2.html">ros2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">URDF (Description mécanique du robot)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choix-dune-representation-urdf">Choix d’une représentation URDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structure-du-package-de-description">Structure du package de description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fichier-urdf">Fichier URDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilisation-des-meshes">Utilisation des meshes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problemes-rencontres">Problèmes rencontrés</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verification-de-lurdf">Vérification de l’URDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lien-avec-la-suite-du-projet">Lien avec la suite du projet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="90_rviz.html">RViz (Visualisation du robot)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="60_ros2.html" title="Chapitre précédent">ros2</a></li>
+      <li>Next: <a href="90_rviz.html" title="Chapitre suivant">RViz (Visualisation du robot)</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, HortenseWat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/80_urdf.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
