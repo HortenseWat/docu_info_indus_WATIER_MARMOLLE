@@ -22,7 +22,9 @@ L’objectif de cette partie est de mettre en place un environnement ROS 2 propr
 pour pouvoir :
 
 - organiser les packages du projet
+
 - intégrer l’URDF dans un package de description
+
 - préparer la visualisation RViz
 
 Dans ce TP, ROS 2 est utilisé surtout pour la structure du projet et la future visualisation,
@@ -74,17 +76,24 @@ Le dossier ``/opt/ros/humble`` était présent mais incomplet.
 Activation de ROS 2 dans un terminal (source)
 ---------------------------------------------
 
-Pour utiliser ROS2 dans un terminal, il faut charger l’environnement ROS2 via ``source``.
+Avant toute utilisation de ROS2, deux commandes ``source`` sont nécessaires :
 
 .. code-block:: bash
 
    source /opt/ros/jazzy/setup.bash
+   source ~/docu_info_indus_WATIER_MARMOLLE/ros2_ws/install/setup.bash
+
+La première active l’environnement ROS2 système.
+La seconde active le package ros2 de notre projet dans le terminal (rend visibles les packages du projet contenus dans le workspace).
+
 
 Pourquoi on fait ça
 ^^^^^^^^^^^^^^^^^^^
 
 Cette commande configure l’environnement du terminal, notamment :
+
 - ajout des exécutables ROS2 dans le ``PATH`` (ros2, rviz2, etc.)
+
 - configuration des chemins de packages et bibliothèques ROS2
 
 Important : chaque nouveau terminal est indépendant.
@@ -100,7 +109,9 @@ Un workspace ROS2 est créé pour stocker les packages du projet de manière sta
 Le workspace permet de :
 
 - compiler avec ``colcon build``
+
 - isoler le projet (sans modifier le ROS2 système)
+
 - versionner uniquement le code utile
 
 Création du workspace
@@ -115,8 +126,11 @@ Dans le dépôt Git, on a créé un workspace ROS2 :
 La convention ROS2 est :
 
 - ``ros2_ws/src`` : code source des packages
+
 - ``ros2_ws/build`` : fichiers de build (générés)
+
 - ``ros2_ws/install`` : workspace compilé (généré)
+
 - ``ros2_ws/log`` : logs (générés)
 
 Compilation du workspace
@@ -152,7 +166,9 @@ Objectif du package
 Un package ROS2 de description est créé pour contenir :
 
 - URDF
+
 - meshes (Collada ``.dae``)
+
 - fichiers de lancement (launch)
 
 Création
@@ -167,7 +183,7 @@ Depuis ``ros2_ws/src`` :
    ros2 pkg create pantograph_description --build-type ament_python
 
 Pourquoi ``ament_python``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Le package est principalement un package de fichiers (URDF, meshes, launch),
 donc le build type Python est suffisant et simple.
@@ -177,21 +193,29 @@ Erreurs rencontrées et solutions
 --------------------------------
 
 - **Erreur** : ``ros2: command not found``
+
   - **Cause** : environnement non sourcé / mauvaise distribution (humble incomplet)
+  
   - **Solution** : utiliser ``/opt/ros/jazzy`` et sourcer correctement :
 
     .. code-block:: bash
 
        source /opt/ros/jazzy/setup.bash
 
+
 - **Erreur** : confusion sur l’endroit où "mettre ROS2"
+
   - **Clarification** : ROS2 système est dans ``/opt/ros/...`` (on ne le copie jamais)
+  
   - Le projet contient uniquement un workspace ``ros2_ws`` versionné (packages + code)
 
 Lien avec le projet
 -------------------
 
 Cette mise en place ROS2 sert directement à :
+
 - structurer proprement le projet dans un workspace standard
+
 - intégrer la description mécanique (URDF + meshes) dans un package dédié
+
 - préparer la visualisation du pantographe dans RViz

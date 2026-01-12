@@ -93,15 +93,20 @@ Le dossier <code class="docutils literal notranslate"><span class="pre">/opt/ros
 </section>
 <section id="activation-de-ros-2-dans-un-terminal-source">
 <h2>Activation de ROS 2 dans un terminal (source)<a class="headerlink" href="#activation-de-ros-2-dans-un-terminal-source" title="Link to this heading">¶</a></h2>
-<p>Pour utiliser ROS2 dans un terminal, il faut charger l’environnement ROS2 via <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p>
+<p>Avant toute utilisation de ROS2, deux commandes <code class="docutils literal notranslate"><span class="pre">source</span></code> sont nécessaires :</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
+<span class="nb">source</span><span class="w"> </span>~/docu_info_indus_WATIER_MARMOLLE/ros2_ws/install/setup.bash
 </pre></div>
 </div>
+<p>La première active l’environnement ROS2 système.
+La seconde active le package ros2 de notre projet dans le terminal (rend visibles les packages du projet contenus dans le workspace).</p>
 <section id="pourquoi-on-fait-ca">
 <h3>Pourquoi on fait ça<a class="headerlink" href="#pourquoi-on-fait-ca" title="Link to this heading">¶</a></h3>
-<p>Cette commande configure l’environnement du terminal, notamment :
-- ajout des exécutables ROS2 dans le <code class="docutils literal notranslate"><span class="pre">PATH</span></code> (ros2, rviz2, etc.)
-- configuration des chemins de packages et bibliothèques ROS2</p>
+<p>Cette commande configure l’environnement du terminal, notamment :</p>
+<ul class="simple">
+<li><p>ajout des exécutables ROS2 dans le <code class="docutils literal notranslate"><span class="pre">PATH</span></code> (ros2, rviz2, etc.)</p></li>
+<li><p>configuration des chemins de packages et bibliothèques ROS2</p></li>
+</ul>
 <p>Important : chaque nouveau terminal est indépendant.
 Il faut donc faire le <code class="docutils literal notranslate"><span class="pre">source</span></code> à chaque fois (ou automatiser via <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>).</p>
 </section>
@@ -182,26 +187,32 @@ Il permet aussi d’installer facilement des fichiers dans le répertoire <code 
 <section id="erreurs-rencontrees-et-solutions">
 <h2>Erreurs rencontrées et solutions<a class="headerlink" href="#erreurs-rencontrees-et-solutions" title="Link to this heading">¶</a></h2>
 <ul>
-<li><p><strong>Erreur</strong> : <code class="docutils literal notranslate"><span class="pre">ros2:</span> <span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code>
-- <strong>Cause</strong> : environnement non sourcé / mauvaise distribution (humble incomplet)
-- <strong>Solution</strong> : utiliser <code class="docutils literal notranslate"><span class="pre">/opt/ros/jazzy</span></code> et sourcer correctement :</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
+<li><p><strong>Erreur</strong> : <code class="docutils literal notranslate"><span class="pre">ros2:</span> <span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code></p>
+<ul>
+<li><p><strong>Cause</strong> : environnement non sourcé / mauvaise distribution (humble incomplet)</p></li>
+<li><p><strong>Solution</strong> : utiliser <code class="docutils literal notranslate"><span class="pre">/opt/ros/jazzy</span></code> et sourcer correctement :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash
 </pre></div>
 </div>
-</div></blockquote>
 </li>
-<li><p><strong>Erreur</strong> : confusion sur l’endroit où &quot;mettre ROS2&quot;
-- <strong>Clarification</strong> : ROS2 système est dans <code class="docutils literal notranslate"><span class="pre">/opt/ros/...</span></code> (on ne le copie jamais)
-- Le projet contient uniquement un workspace <code class="docutils literal notranslate"><span class="pre">ros2_ws</span></code> versionné (packages + code)</p></li>
+</ul>
+</li>
+<li><p><strong>Erreur</strong> : confusion sur l’endroit où &quot;mettre ROS2&quot;</p>
+<ul class="simple">
+<li><p><strong>Clarification</strong> : ROS2 système est dans <code class="docutils literal notranslate"><span class="pre">/opt/ros/...</span></code> (on ne le copie jamais)</p></li>
+<li><p>Le projet contient uniquement un workspace <code class="docutils literal notranslate"><span class="pre">ros2_ws</span></code> versionné (packages + code)</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="lien-avec-le-projet">
 <h2>Lien avec le projet<a class="headerlink" href="#lien-avec-le-projet" title="Link to this heading">¶</a></h2>
-<p>Cette mise en place ROS2 sert directement à :
-- structurer proprement le projet dans un workspace standard
-- intégrer la description mécanique (URDF + meshes) dans un package dédié
-- préparer la visualisation du pantographe dans RViz</p>
+<p>Cette mise en place ROS2 sert directement à :</p>
+<ul class="simple">
+<li><p>structurer proprement le projet dans un workspace standard</p></li>
+<li><p>intégrer la description mécanique (URDF + meshes) dans un package dédié</p></li>
+<li><p>préparer la visualisation du pantographe dans RViz</p></li>
+</ul>
 </section>
 </section>
 
@@ -226,7 +237,7 @@ Il permet aussi d’installer facilement des fichiers dans le répertoire <code 
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Partie mécanique du projet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="50_tests.html">Tests</a></li>

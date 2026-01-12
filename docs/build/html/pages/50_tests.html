@@ -37,11 +37,17 @@
 <h2>Objectif des tests<a class="headerlink" href="#objectif-des-tests" title="Link to this heading">¶</a></h2>
 <p>Les tests ont pour objectif de <strong>vérifier automatiquement</strong> que certaines parties du projet
 fonctionnent comme prévu, et de détecter rapidement les erreurs lors des modifications.</p>
-<p>Dans ce projet, les tests servent principalement à :
-- valider la logique Python indépendante de ROS2
-- vérifier l’intégrité de certains fichiers (ex: URDF)
-- éviter les régressions lors des commits</p>
-<p>Les tests sont écrits en Python et exécutés avec l’outil <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
+<p>Dans ce projet, les tests servent principalement à :</p>
+<ul class="simple">
+<li><p>valider la logique Python indépendante de ROS2</p></li>
+<li><p>vérifier l’intégrité de certains fichiers (ex: URDF)</p></li>
+<li><p>éviter les régressions lors des commits</p></li>
+</ul>
+</section>
+<section id="stockage-des-tests">
+<h2>Stockage des tests<a class="headerlink" href="#stockage-des-tests" title="Link to this heading">¶</a></h2>
+<p>Les tests que nous créons sont enregistrés dans un dossier /tests dans notre repository du projet.
+Chaque test et sous la forme d'un fichier python (extension ''.py'') et exécutés avec l’outil <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
 </section>
 <section id="types-de-tests-mis-en-place">
 <h2>Types de tests mis en place<a class="headerlink" href="#types-de-tests-mis-en-place" title="Link to this heading">¶</a></h2>
@@ -54,7 +60,7 @@ fonctionnent comme prévu, et de détecter rapidement les erreurs lors des modif
 <section id="test-unitaire-validation-du-domaine">
 <h2>Test unitaire : validation du domaine<a class="headerlink" href="#test-unitaire-validation-du-domaine" title="Link to this heading">¶</a></h2>
 <p>### Méthode utilisée</p>
-<p>Un test unitaire a été créé pour vérifier que les entrées (ex: coordonnées, paramètres)
+<p>Un test unitaire <code class="docutils literal notranslate"><span class="pre">test_domain.py</span></code> a été créé pour vérifier que les entrées (ex: coordonnées, paramètres)
 restent dans un domaine autorisé.</p>
 <p>La logique est séparée dans un module Python indépendant de ROS2
 (<code class="docutils literal notranslate"><span class="pre">pentograph_core</span></code>), ce qui permet de tester facilement sans dépendances lourdes.</p>
@@ -63,9 +69,11 @@ restent dans un domaine autorisé.</p>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.2</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mf">0.2</span> <span class="ow">and</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mf">0.3</span>
 </pre></div>
 </div>
-<p>Le test unitaire associé vérifie :
-- un point valide → accepté
-- un point hors domaine → refusé</p>
+<p>Le test unitaire associé vérifie :</p>
+<ul class="simple">
+<li><p>un point valide → accepté</p></li>
+<li><p>un point hors domaine → refusé</p></li>
+</ul>
 <p>Exemple de test :</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_point_in_domain</span><span class="p">():</span>
     <span class="k">assert</span> <span class="n">is_in_domain</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
@@ -75,18 +83,27 @@ restent dans un domaine autorisé.</p>
 </pre></div>
 </div>
 <p>### Pourquoi ce test</p>
-<p>Ce test permet de :
-- détecter immédiatement une erreur logique
-- éviter des entrées incohérentes dans le reste du projet
-- garantir un comportement stable même après modification du code</p>
+<p>Ce test permet de :</p>
+<ul class="simple">
+<li><p>détecter immédiatement une erreur logique</p></li>
+<li><p>éviter des entrées incohérentes dans le reste du projet</p></li>
+<li><p>garantir un comportement stable même après modification du code</p></li>
+</ul>
 <p>Ce type de test est rapide, simple et très efficace.</p>
+</section>
+<section id="test-unitaire-verification-du-modele-geometrique-inverse-etabli-a-l-aide-d-une-simulation-creo">
+<h2>Test unitaire : Vérification du Modèle géométrique inverse établi à l'aide d'une simulation CREO<a class="headerlink" href="#test-unitaire-verification-du-modele-geometrique-inverse-etabli-a-l-aide-d-une-simulation-creo" title="Link to this heading">¶</a></h2>
+<p>On a aussi pu établir un test unitaire <code class="docutils literal notranslate"><span class="pre">test_MGI.py</span></code> permettant de comparer, pour une position (x, y) de l'effecteur du pantographe, des angles q1 et q4 calculés par notre modèle géométrique inverse. Pour ce faire, on récupère dans un tableau excel les valeurs de (x, y, q1 et q4) en fonction du temps, et l'on compare pour tous les (q1, q4) simulés, les (q1, q4) calculés.</p>
+<p>Ce test est très pertinent mais ne fonctionne pas bien (erreur dans notre MGI).</p>
 </section>
 <section id="test-dintegration-validation-urdf">
 <h2>Test d’intégration : validation URDF<a class="headerlink" href="#test-dintegration-validation-urdf" title="Link to this heading">¶</a></h2>
 <p>### Méthode utilisée</p>
-<p>Un test d’intégration a été ajouté pour vérifier que le fichier URDF :
-- existe bien dans le projet
-- peut être lu et parsé sans erreur</p>
+<p>Un test d’intégration a été ajouté pour vérifier que le fichier URDF :</p>
+<ul class="simple">
+<li><p>existe bien dans le projet</p></li>
+<li><p>peut être lu et parsé sans erreur</p></li>
+</ul>
 <p>Ce test ne vérifie pas la cinématique complète, mais garantit que le fichier
 est <strong>syntaxiquement valide</strong> et exploitable par les outils ROS2.</p>
 <p>Exemple de test :</p>
@@ -100,11 +117,13 @@ est <strong>syntaxiquement valide</strong> et exploitable par les outils ROS2.</
 </pre></div>
 </div>
 <p>### Pourquoi ce test</p>
-<p>Ce test permet de :
-- détecter une suppression ou un déplacement accidentel du fichier URDF
-- éviter des erreurs bloquantes lors de l’utilisation de ROS2 ou RViz
-- sécuriser la structure du projet</p>
-<p>Il s’agit d’un test d’intégration simple mais pertinent.</p>
+<p>Ce test permet de :</p>
+<ul class="simple">
+<li><p>détecter une suppression ou un déplacement accidentel du fichier URDF</p></li>
+<li><p>éviter des erreurs bloquantes lors de l’utilisation de ROS2 ou RViz</p></li>
+<li><p>sécuriser la structure du projet</p></li>
+</ul>
+<p>Il s’agit d’un test d’intégration simple mais pertinent. Il n'a pas l'air entièrement fonctionnel cependant.</p>
 </section>
 <section id="execution-des-tests">
 <h2>Exécution des tests<a class="headerlink" href="#execution-des-tests" title="Link to this heading">¶</a></h2>
@@ -114,27 +133,41 @@ est <strong>syntaxiquement valide</strong> et exploitable par les outils ROS2.</
 </div>
 <p>Le paramètre <code class="docutils literal notranslate"><span class="pre">-q</span></code> permet d’obtenir une sortie concise
 (indication claire succès / échec).</p>
+<p>Pour lancer un test spécifique, on peut utiliser la commande suivante :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>NOM-DU-DOSSIER-TESTS/nom-du-test
+</pre></div>
+</div>
+<p>Dans notre cas par exemple, pour lancer le test unitaire :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>tests/test_domain.py
+</pre></div>
+</div>
 </section>
 <section id="integration-continue-ci">
 <h2>Intégration continue (CI)<a class="headerlink" href="#integration-continue-ci" title="Link to this heading">¶</a></h2>
 <p>Les tests sont exécutés automatiquement via <strong>GitHub Actions</strong> à chaque <code class="docutils literal notranslate"><span class="pre">push</span></code>.</p>
 <p>Principe :
-- à chaque modification du dépôt
-- les tests sont relancés automatiquement
-- un échec empêche de valider une modification incorrecte</p>
-<p>Cela permet de :
-- détecter rapidement une régression
-- garantir une base de code stable
-- renforcer la qualité globale du projet</p>
+- à chaque modification du dépôt</p>
+<ul class="simple">
+<li><p>les tests sont relancés automatiquement</p></li>
+<li><p>un échec empêche de valider une modification incorrecte</p></li>
+</ul>
+<p>Cela permet de :</p>
+<ul class="simple">
+<li><p>détecter rapidement une régression</p></li>
+<li><p>garantir une base de code stable</p></li>
+<li><p>renforcer la qualité globale du projet</p></li>
+</ul>
 </section>
 <section id="lien-avec-le-projet">
 <h2>Lien avec le projet<a class="headerlink" href="#lien-avec-le-projet" title="Link to this heading">¶</a></h2>
 <p>Les tests ne couvrent pas l’intégralité du projet (ROS2, RViz),
 mais ciblent volontairement les parties critiques et facilement automatisables.</p>
-<p>Cette approche permet d’avoir :
-- des tests utiles
-- un coût de maintenance faible
-- une base saine pour faire évoluer le projet</p>
+<p>Cette approche permet d’avoir :</p>
+<ul class="simple">
+<li><p>des tests utiles</p></li>
+<li><p>un coût de maintenance faible</p></li>
+<li><p>une base saine pour faire évoluer le projet</p></li>
+</ul>
 </section>
 </section>
 
@@ -159,13 +192,15 @@ mais ciblent volontairement les parties critiques et facilement automatisables.<
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Mécanique du Pantographe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_meca.html">Partie mécanique du projet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_sphinx.html">Créer une documentation (Sphinx)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tests</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#objectif-des-tests">Objectif des tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stockage-des-tests">Stockage des tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#types-de-tests-mis-en-place">Types de tests mis en place</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-unitaire-validation-du-domaine">Test unitaire : validation du domaine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-unitaire-verification-du-modele-geometrique-inverse-etabli-a-l-aide-d-une-simulation-creo">Test unitaire : Vérification du Modèle géométrique inverse établi à l'aide d'une simulation CREO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-dintegration-validation-urdf">Test d’intégration : validation URDF</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#execution-des-tests">Exécution des tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#integration-continue-ci">Intégration continue (CI)</a></li>

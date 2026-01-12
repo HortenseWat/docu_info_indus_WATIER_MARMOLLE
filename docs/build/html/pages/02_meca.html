@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mécanique du Pantographe &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
+    <title>Partie mécanique du projet &#8212; Documentation Pentographe_WATIER_MARMOLLE </title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
     <script src="../_static/documentation_options.js?v=fabab5a3"></script>
@@ -31,16 +31,126 @@
 
           <div class="body" role="main">
             
-  <section id="mecanique-du-pantographe">
-<h1>Mécanique du Pantographe<a class="headerlink" href="#mecanique-du-pantographe" title="Link to this heading">¶</a></h1>
-<section id="equations-mecaniques">
-<h2>Equations mécaniques<a class="headerlink" href="#equations-mecaniques" title="Link to this heading">¶</a></h2>
-<p>On trouve les equations</p>
+  <section id="partie-mecanique-du-projet">
+<h1>Partie mécanique du projet<a class="headerlink" href="#partie-mecanique-du-projet" title="Link to this heading">¶</a></h1>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Link to this heading">¶</a></h2>
+<p>L’objectif de la partie mécanique est de disposer d’un <strong>modèle géométrique cohérent</strong>
+du pantographe, permettant :</p>
+<ul class="simple">
+<li><p>de comprendre la structure mécanique du système</p></li>
+<li><p>de simuler le mouvement du mécanisme</p></li>
+<li><p>d’extraire des données de référence (angles, positions)</p></li>
+<li><p>de comparer ces données avec un modèle géométrique inverse développé en Python</p></li>
+</ul>
+<p>Cette partie constitue le lien entre la <strong>mécanique</strong>, la <strong>modélisation</strong> et les <strong>tests logiciels</strong>.</p>
 </section>
-<section id="cad-avec-creo">
-<h2>CAD avec CREO<a class="headerlink" href="#cad-avec-creo" title="Link to this heading">¶</a></h2>
-<p>on refait la CAD
-on fait une simu avec mecanisme</p>
+<section id="recuperation-des-pieces">
+<h2>Récupération des pièces<a class="headerlink" href="#recuperation-des-pieces" title="Link to this heading">¶</a></h2>
+<p>Les pièces mécaniques du pantographe ont été récupérées à partir des ressources du cours,
+sous forme de fichiers <strong>STEP (``.stp``)</strong>.</p>
+<p>Ces fichiers représentent les différentes parties du mécanisme :</p>
+<ul class="simple">
+<li><p>base</p></li>
+<li><p>bras (link1, link2, link3, link4)</p></li>
+<li><p>effecteur</p></li>
+</ul>
+</section>
+<section id="import-dans-creo-et-assemblage-initial">
+<h2>Import dans Creo et assemblage initial<a class="headerlink" href="#import-dans-creo-et-assemblage-initial" title="Link to this heading">¶</a></h2>
+<p>Les pièces ont été importées dans <strong>Creo Parametric</strong> puis assemblées dans un fichier
+d’assemblage (<code class="docutils literal notranslate"><span class="pre">.asm</span></code>).</p>
+<section id="probleme-rencontre">
+<h3>Problème rencontré<a class="headerlink" href="#probleme-rencontre" title="Link to this heading">¶</a></h3>
+<p>Lors de l’assemblage initial, plusieurs pièces se sont révélées mal dimensionnées et donc incompatibles avec un assemblage fonctionnel du mécanisme.</p>
+<p>Cela empêchait un assemblage correct et une simulation cinématique fiable adaptée au modèle géométrique donné.</p>
+</section>
+</section>
+<section id="correction-des-pieces-et-reassemblage">
+<h2>Correction des pièces et réassemblage<a class="headerlink" href="#correction-des-pieces-et-reassemblage" title="Link to this heading">¶</a></h2>
+<p>Pour résoudre ce problème, de <strong>nouvelles pièces ont été recréées</strong> dans Creo
+avec des dimensions cohérentes.</p>
+<p>Méthode utilisée :</p>
+<ul class="simple">
+<li><p>création de nouvelles pièces aux bonnes dimensions</p></li>
+<li><p>création des axes/plans nécessaires à l'assemblage dans les anciennes pièces (importées depuis STEP donc n'ont aucune géométrie)</p></li>
+<li><p>remplacement des anciennes pièces dans l’assemblage</p></li>
+</ul>
+<p>Une fois les nouvelles pièces créées, l’ensemble du mécanisme a été <strong>réassemblé</strong>
+afin d’obtenir une structure mécanique fonctionnelle.</p>
+</section>
+<section id="simulation-du-mecanisme-dans-creo">
+<h2>Simulation du mécanisme dans Creo<a class="headerlink" href="#simulation-du-mecanisme-dans-creo" title="Link to this heading">¶</a></h2>
+<p>L’outil <strong>Creo Mechanism</strong> a ensuite été utilisé pour simuler le mouvement du pantographe.</p>
+<p>Fonctionnalités utilisées :</p>
+<ul class="simple">
+<li><p>définition de moteurs sur les articulations</p></li>
+<li><p>contrôle des angles des moteurs</p></li>
+<li><p>simulation du mouvement global du mécanisme</p></li>
+</ul>
+<p>Cela permet de :</p>
+<ul class="simple">
+<li><p>faire évoluer le pantographe dans son espace de travail</p></li>
+<li><p>observer le comportement de l’effecteur</p></li>
+<li><p>mesurer des grandeurs mécaniques pertinentes</p></li>
+</ul>
+<p>Voici ce que l'on a pu observer lors de notre simulation :</p>
+<a class="reference internal image-reference" href="../_images/panto.gif"><img alt="Visualisation RViz du pantographe" class="align-center" src="../_images/panto.gif" style="width: 80%;" /></a>
+</section>
+<section id="mesures-et-extraction-des-donnees">
+<h2>Mesures et extraction des données<a class="headerlink" href="#mesures-et-extraction-des-donnees" title="Link to this heading">¶</a></h2>
+<p>Pendant la simulation, les grandeurs suivantes ont été mesurées :</p>
+<ul class="simple">
+<li><p>angles des moteurs (q1, q4)</p></li>
+<li><p>positions de l’effecteur (x_eff, y_eff)</p></li>
+</ul>
+<p>Voici les paramètres mesurés :</p>
+<a class="reference internal image-reference" href="../_images/q1q4.png"><img alt="Description de l’image" class="align-center" src="../_images/q1q4.png" style="width: 600px;" /></a>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/xeffyeff.png"><img alt="Schéma du setup" src="../_images/xeffyeff.png" style="width: 80%;" /></a>
+</figure>
+<p>Ces données ont été exportées depuis Creo sous forme d’un <strong>tableau Excel</strong>.</p>
+<p>L’export permet une exploitation externe des données nous permettant de les utiliser directement dans python par exemple pour une comparaison avec des modèles théoriques.</p>
+</section>
+<section id="comparaison-avec-un-modele-geometrique-inverse">
+<h2>Comparaison avec un modèle géométrique inverse<a class="headerlink" href="#comparaison-avec-un-modele-geometrique-inverse" title="Link to this heading">¶</a></h2>
+<p>Notre <strong>modèle géométrique inverse</strong> a été crée dans Matlab. Puis nous avons utilisé le résultat pour en faire une fonction python.</p>
+<p>L’objectif est de :</p>
+<ul class="simple">
+<li><p>prédire la position de l’effecteur à partir des angles moteurs</p></li>
+<li><p>comparer ces résultats avec ceux issus de la simulation Creo</p></li>
+</ul>
+<p>Un fichier de test Python a été créé pour comparer :</p>
+<ul class="simple">
+<li><p>les données issues de Creo (référence)</p></li>
+<li><p>les résultats du modèle géométrique inverse</p></li>
+</ul>
+</section>
+<section id="resultat-et-limites">
+<h2>Résultat et limites<a class="headerlink" href="#resultat-et-limites" title="Link to this heading">¶</a></h2>
+<p>La comparaison n’a pas permis d’obtenir une concordance satisfaisante entre la simulation mécanique Creo et le modèle géométrique inverse Python.</p>
+<p>Le test Python associé <strong>n’est pas fonctionnel</strong> à ce stade.</p>
+<p>Cause identifiée :</p>
+<ul class="simple">
+<li><p>le modèle géométrique inverse n’est pas encore correct</p></li>
+<li><p>certaines hypothèses géométriques sont incomplètes ou erronées</p></li>
+</ul>
+<p>Cette difficulté a néanmoins permis :</p>
+<ul class="simple">
+<li><p>d’identifier les limites du modèle théorique</p></li>
+<li><p>de mettre en évidence l’intérêt de confronter simulation et calcul</p></li>
+</ul>
+</section>
+<section id="lien-avec-le-reste-du-projet">
+<h2>Lien avec le reste du projet<a class="headerlink" href="#lien-avec-le-reste-du-projet" title="Link to this heading">¶</a></h2>
+<p>La partie mécanique alimente directement :</p>
+<ul class="simple">
+<li><p>la compréhension globale du pantographe</p></li>
+<li><p>la définition des domaines de travail</p></li>
+<li><p>les tests logiciels</p></li>
+<li><p>la réflexion sur l’URDF et la visualisation</p></li>
+</ul>
+<p>Même si le modèle inverse n’est pas finalisé, le travail réalisé fournit une base solide pour améliorer la cohérence entre mécanique, modélisation et logiciel.</p>
 </section>
 </section>
 
@@ -65,9 +175,16 @@ on fait une simu avec mecanisme</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_elec.html">Installation électronique – Mise en place du setup</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Mécanique du Pantographe</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#equations-mecaniques">Equations mécaniques</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cad-avec-creo">CAD avec CREO</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Partie mécanique du projet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recuperation-des-pieces">Récupération des pièces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-dans-creo-et-assemblage-initial">Import dans Creo et assemblage initial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#correction-des-pieces-et-reassemblage">Correction des pièces et réassemblage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-du-mecanisme-dans-creo">Simulation du mécanisme dans Creo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesures-et-extraction-des-donnees">Mesures et extraction des données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparaison-avec-un-modele-geometrique-inverse">Comparaison avec un modèle géométrique inverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resultat-et-limites">Résultat et limites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lien-avec-le-reste-du-projet">Lien avec le reste du projet</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03_repo.html">Repository (Git + GitHub)</a></li>

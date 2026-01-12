@@ -22,7 +22,7 @@ Les tests que nous créons sont enregistrés dans un dossier /tests dans notre r
 Chaque test et sous la forme d'un fichier python (extension ''.py'') et exécutés avec l’outil ``pytest``.
 
 Types de tests mis en place
---------------------------
+---------------------------
 
 Deux types de tests ont été mis en place :
 
