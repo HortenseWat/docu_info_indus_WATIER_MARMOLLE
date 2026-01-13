@@ -154,6 +154,8 @@ Cette difficulté a néanmoins permis :
 
 - de mettre en évidence l’intérêt de confronter simulation et calcul
 
+Les fichiers test sont disponibles sur 'github'<https://github.com/HortenseWat/docu_info_indus_WATIER_MARMOLLE/tree/main/tests>
+
 Lien avec le reste du projet
 ----------------------------
 
